@@ -1,36 +1,13 @@
-import type { Market, SubMarket, MapPeriod } from "./services";
-import { sqliteRepository, stockMapFetcher } from "./services";
-
-const pathKeys = [
-  ["domestic", "kospi", "day"],
-  ["domestic", "kosdaq", "day"],
-  ["overseas", "dow", "day"],
-  ["overseas", "nasdaq", "day"],
-] as [Market, SubMarket, MapPeriod][];
+import { sqliteRepository, stockSelector } from "./services";
 
 (function main() {
   // sqliteRepository.delete();
 
-  pathKeys.map(([market, subMarket, mapPeriod]) => {
-    /** fetch map data */
-    stockMapFetcher
-      .fetchApi(market, subMarket, mapPeriod)
-      .then((data) => {
-        if (!data) {
-          console.error(
-            `data not fetched - ${market}/${subMarket}/${mapPeriod}`
-          );
-          return ["", {}];
-        }
-        return [
-          `map-${market}-${subMarket}-${mapPeriod}`,
-          JSON.stringify(data),
-        ];
-      })
-      /** insert to db */
-      .then(([key, value]) => {
-        if (!key) return;
-        sqliteRepository.insert({ key, value });
-      });
-  });
+  /** 국내 주식 상위 100개 종목 코드 추출 */
+  const krTopStockCodes = stockSelector.takeKrTopStockCodes();
+  console.log({ krTopStockCodes });
+
+  /** 국내 주식 데이터 가져오기 */
+
+  /** sqlite에 데이터 저장 */
 })();
