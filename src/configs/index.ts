@@ -6,4 +6,4 @@ config({
   path: resolve(__dirname, ".env"),
 });
 
-export const { Z_BASE_URL = "" } = process.env;
+export const { Z_BASE_URL = "", N_BASE_URL = "" } = process.env;
