@@ -6,7 +6,7 @@ export class Fetcher {
   protected async get<T>(paths: string): Promise<T | false> {
     try {
       return this.fetch(paths).then(({ statusCode, body }) => {
-        if (statusCode >= 400) return false;
+        if (statusCode >= 400) throw new Error(JSON.stringify(body));
         return body.json();
       });
     } catch (err) {
