@@ -18,11 +18,14 @@ export class StockSelector {
     private readonly fetcher = stockMapFetcher
   ) {}
 
-  takeKrTopStockCodes(topNumber = 100): string[] {
+  takeKrTopStockData(topNumber = 100): Stock[] {
     return this.flatStockMapsToStocks(this.getKrStockMapsFromDB())
       .sort((a, b) => b.marketCap - a.marketCap)
-      .slice(0, topNumber)
-      .map((d) => d.stockCode);
+      .slice(0, topNumber);
+  }
+
+  takeKrTopStockCodes(topNumber = 100): string[] {
+    return this.takeKrTopStockData(topNumber).map((d) => d.stockCode);
   }
 
   private getKrStockMapsFromDB(): StockMap[] {
