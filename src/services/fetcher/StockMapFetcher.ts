@@ -1,12 +1,12 @@
 import { URL } from "node:url";
 
-import { BASE_URL } from "../../configs";
+import { Z_BASE_URL } from "../../configs";
 
 import type { Market, SubMarket, MapPeriod, StockMap } from "./types";
 import { Fetcher } from "./Fetcher";
 
 export class StockMapFetcher extends Fetcher {
-  constructor(private readonly baseUrl = BASE_URL) {
+  constructor(private readonly baseUrl = Z_BASE_URL) {
     super();
   }
 
